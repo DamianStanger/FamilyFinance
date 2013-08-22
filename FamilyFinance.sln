@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyFinance", "FamilyFinance\FamilyFinance.csproj", "{3E907916-0B5A-46F7-B626-636D4B10A308}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyFinance.Tests", "FamilyFinance.Tests\FamilyFinance.Tests.csproj", "{23C0086B-165A-44A5-813B-20C81B46107A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3E907916-0B5A-46F7-B626-636D4B10A308}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E907916-0B5A-46F7-B626-636D4B10A308}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E907916-0B5A-46F7-B626-636D4B10A308}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E907916-0B5A-46F7-B626-636D4B10A308}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23C0086B-165A-44A5-813B-20C81B46107A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23C0086B-165A-44A5-813B-20C81B46107A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23C0086B-165A-44A5-813B-20C81B46107A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23C0086B-165A-44A5-813B-20C81B46107A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
