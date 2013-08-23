@@ -26,6 +26,9 @@
 
     <div class="display-label">Initiator</div>
     <div class="display-field">@(Model.Initiator == null ? "None" : Model.Initiator.Name)</div>
+
+    <div class="display-label">Category</div>
+    <div class="display-field">@(Model.Category == null ? "None" : Model.Category.Name)</div>
 </fieldset>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |

@@ -12,17 +12,19 @@ namespace FamilyFinance.Controllers
     {
 		private readonly IAccountRepository accountRepository;
 		private readonly IPersonRepository personRepository;
+		private readonly ICategoryRepository categoryRepository;
 		private readonly ITransactionRepository transactionRepository;
 
 		// If you are using Dependency Injection, you can delete the following constructor
-        public TransactionsController() : this(new AccountRepository(), new PersonRepository(), new TransactionRepository())
+        public TransactionsController() : this(new AccountRepository(), new PersonRepository(), new CategoryRepository(), new TransactionRepository())
         {
         }
 
-        public TransactionsController(IAccountRepository accountRepository, IPersonRepository personRepository, ITransactionRepository transactionRepository)
+        public TransactionsController(IAccountRepository accountRepository, IPersonRepository personRepository, ICategoryRepository categoryRepository, ITransactionRepository transactionRepository)
         {
 			this.accountRepository = accountRepository;
 			this.personRepository = personRepository;
+			this.categoryRepository = categoryRepository;
 			this.transactionRepository = transactionRepository;
         }
 
@@ -31,7 +33,7 @@ namespace FamilyFinance.Controllers
 
         public ViewResult Index()
         {
-            return View(transactionRepository.AllIncluding(transaction => transaction.Account, transaction => transaction.Initiator));
+            return View(transactionRepository.AllIncluding(transaction => transaction.Account, transaction => transaction.Initiator, transaction => transaction.Category));
         }
 
         //
@@ -49,6 +51,7 @@ namespace FamilyFinance.Controllers
         {
 			ViewBag.PossibleAccounts = accountRepository.All;
 			ViewBag.PossibleInitiators = personRepository.All;
+			ViewBag.PossibleCategories = categoryRepository.All;
             return View();
         } 
 
@@ -65,6 +68,7 @@ namespace FamilyFinance.Controllers
             } else {
 				ViewBag.PossibleAccounts = accountRepository.All;
 				ViewBag.PossibleInitiators = personRepository.All;
+				ViewBag.PossibleCategories = categoryRepository.All;
 				return View();
 			}
         }
@@ -76,6 +80,7 @@ namespace FamilyFinance.Controllers
         {
 			ViewBag.PossibleAccounts = accountRepository.All;
 			ViewBag.PossibleInitiators = personRepository.All;
+			ViewBag.PossibleCategories = categoryRepository.All;
              return View(transactionRepository.Find(id));
         }
 
@@ -92,6 +97,7 @@ namespace FamilyFinance.Controllers
             } else {
 				ViewBag.PossibleAccounts = accountRepository.All;
 				ViewBag.PossibleInitiators = personRepository.All;
+				ViewBag.PossibleCategories = categoryRepository.All;
 				return View();
 			}
         }
@@ -121,6 +127,7 @@ namespace FamilyFinance.Controllers
             if (disposing) {
                 accountRepository.Dispose();
                 personRepository.Dispose();
+                categoryRepository.Dispose();
                 transactionRepository.Dispose();
             }
             base.Dispose(disposing);

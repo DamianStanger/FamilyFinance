@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using FamilyFinance.Models.Finance;
 
 namespace FamilyFinance.Models
@@ -14,5 +15,6 @@ namespace FamilyFinance.Models
             context.People.Add(new Person{Name = "Cara"});
             context.SaveChanges();
         }
+
     }
 }

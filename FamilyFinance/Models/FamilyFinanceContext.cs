@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
 
@@ -22,5 +23,15 @@ namespace FamilyFinance.Models
         public DbSet<FamilyFinance.Models.Finance.Account> Accounts { get; set; }
 
         public DbSet<FamilyFinance.Models.Finance.Transaction> Transactions { get; set; }
+
+        public DbSet<FamilyFinance.Models.Finance.Category> Categories { get; set; }
+
+        public DbSet<FamilyFinance.Models.Finance.Transfer> Transfers { get; set; }
+
+        //remove all the cascading deletes
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+        }
     }
 }

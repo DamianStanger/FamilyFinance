@@ -1,4 +1,4 @@
-@model IEnumerable<FamilyFinance.Models.Finance.Transaction>
+@model IEnumerable<FamilyFinance.Models.Finance.Transfer>
 
 @{
     ViewBag.Title = "Index";
@@ -13,25 +13,16 @@
     <tr>
         <th></th>
         <th>
-            Amount
-        </th>
-        <th>
             Name
         </th>
         <th>
-            Description
+            Amount
         </th>
         <th>
-            Date
+            FromAccount
         </th>
         <th>
-            Account
-        </th>
-        <th>
-            Initiator
-        </th>
-        <th>
-            Category
+            ToAccount
         </th>
     </tr>
 
@@ -43,25 +34,16 @@
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
         <td>
-			@String.Format("{0:F}", item.Amount)
-        </td>
-        <td>
 			@item.Name
         </td>
         <td>
-			@item.Description
+			@String.Format("{0:F}", item.Amount)
         </td>
         <td>
-			@String.Format("{0:g}", item.Date)
+			@(item.FromAccount == null ? "None" : item.FromAccount.Name)
         </td>
         <td>
-			@(item.Account == null ? "None" : item.Account.Name)
-        </td>
-        <td>
-			@(item.Initiator == null ? "None" : item.Initiator.Name)
-        </td>
-        <td>
-			@(item.Category == null ? "None" : item.Category.Name)
+			@(item.ToAccount == null ? "None" : item.ToAccount.Name)
         </td>
     </tr>
 }

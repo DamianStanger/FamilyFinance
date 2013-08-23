@@ -13,5 +13,7 @@ namespace FamilyFinance.Models.Finance
         public virtual Account Account { get; set; }
         public int InitiatorId { get; set; }
         public virtual Person Initiator { get; set; }
+        public int CategoryId { get; set; }
+        public virtual Category Category { get; set; }
     }
 }
