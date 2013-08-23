@@ -1,0 +1,26 @@
+@model FamilyFinance.Areas.Admin.Models.Finance.Account
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Account</legend>
+
+    <div class="display-label">Name</div>
+    <div class="display-field">@Model.Name</div>
+
+    <div class="display-label">Bank</div>
+    <div class="display-field">@Model.Bank</div>
+
+    <div class="display-label">Owner</div>
+    <div class="display-field">@(Model.Owner == null ? "None" : Model.Owner.Name)</div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+
