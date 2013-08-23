@@ -15,6 +15,9 @@
         <th>
             Name
         </th>
+        <th>
+            ParentCategory
+        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -26,6 +29,9 @@
         </td>
         <td>
 			@item.Name
+        </td>
+        <td>
+			@(item.ParentCategory == null ? "None" : item.ParentCategory.Name)
         </td>
     </tr>
 }

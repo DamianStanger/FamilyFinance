@@ -10,15 +10,17 @@ namespace FamilyFinance.Controllers
 {   
     public class AccountsController : Controller
     {
+		private readonly IPersonRepository personRepository;
 		private readonly IAccountRepository accountRepository;
 
 		// If you are using Dependency Injection, you can delete the following constructor
-        public AccountsController() : this(new AccountRepository())
+        public AccountsController() : this(new PersonRepository(), new AccountRepository())
         {
         }
 
-        public AccountsController(IAccountRepository accountRepository)
+        public AccountsController(IPersonRepository personRepository, IAccountRepository accountRepository)
         {
+			this.personRepository = personRepository;
 			this.accountRepository = accountRepository;
         }
 
@@ -27,7 +29,7 @@ namespace FamilyFinance.Controllers
 
         public ViewResult Index()
         {
-            return View(accountRepository.All);
+            return View(accountRepository.AllIncluding(account => account.Owner));
         }
 
         //
@@ -43,6 +45,7 @@ namespace FamilyFinance.Controllers
 
         public ActionResult Create()
         {
+			ViewBag.PossibleOwners = personRepository.All;
             return View();
         } 
 
@@ -57,6 +60,7 @@ namespace FamilyFinance.Controllers
                 accountRepository.Save();
                 return RedirectToAction("Index");
             } else {
+				ViewBag.PossibleOwners = personRepository.All;
 				return View();
 			}
         }
@@ -66,6 +70,7 @@ namespace FamilyFinance.Controllers
  
         public ActionResult Edit(int id)
         {
+			ViewBag.PossibleOwners = personRepository.All;
              return View(accountRepository.Find(id));
         }
 
@@ -80,6 +85,7 @@ namespace FamilyFinance.Controllers
                 accountRepository.Save();
                 return RedirectToAction("Index");
             } else {
+				ViewBag.PossibleOwners = personRepository.All;
 				return View();
 			}
         }
@@ -107,6 +113,7 @@ namespace FamilyFinance.Controllers
         protected override void Dispose(bool disposing)
         {
             if (disposing) {
+                personRepository.Dispose();
                 accountRepository.Dispose();
             }
             base.Dispose(disposing);

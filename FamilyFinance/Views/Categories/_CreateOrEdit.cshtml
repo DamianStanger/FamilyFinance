@@ -10,3 +10,14 @@
     @Html.ValidationMessageFor(model => model.Name)
 </div>
 
+<div class="editor-label">
+    ParentCategory
+</div>
+<div class="editor-field">
+    @Html.DropDownListFor(model => model.ParentCategoryId, ((IEnumerable<FamilyFinance.Models.Finance.Category>)ViewBag.PossibleParentCategories).Select(option => new SelectListItem {
+        Text = (option == null ? "None" : option.Name), 
+        Value = option.Id.ToString(),
+        Selected = (Model != null) && (option.Id == Model.ParentCategoryId)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.ParentCategoryId)
+</div>

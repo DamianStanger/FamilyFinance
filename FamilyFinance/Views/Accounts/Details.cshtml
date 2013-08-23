@@ -14,6 +14,9 @@
 
     <div class="display-label">Bank</div>
     <div class="display-field">@Model.Bank</div>
+
+    <div class="display-label">Owner</div>
+    <div class="display-field">@(Model.Owner == null ? "None" : Model.Owner.Name)</div>
 </fieldset>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |

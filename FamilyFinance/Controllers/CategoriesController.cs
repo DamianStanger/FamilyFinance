@@ -27,7 +27,7 @@ namespace FamilyFinance.Controllers
 
         public ViewResult Index()
         {
-            return View(categoryRepository.All);
+            return View(categoryRepository.AllIncluding(category => category.ParentCategory));
         }
 
         //
@@ -43,6 +43,7 @@ namespace FamilyFinance.Controllers
 
         public ActionResult Create()
         {
+			ViewBag.PossibleParentCategories = categoryRepository.All;
             return View();
         } 
 
@@ -57,6 +58,7 @@ namespace FamilyFinance.Controllers
                 categoryRepository.Save();
                 return RedirectToAction("Index");
             } else {
+				ViewBag.PossibleParentCategories = categoryRepository.All;
 				return View();
 			}
         }
@@ -66,6 +68,7 @@ namespace FamilyFinance.Controllers
  
         public ActionResult Edit(int id)
         {
+			ViewBag.PossibleParentCategories = categoryRepository.All;
              return View(categoryRepository.Find(id));
         }
 
@@ -80,6 +83,7 @@ namespace FamilyFinance.Controllers
                 categoryRepository.Save();
                 return RedirectToAction("Index");
             } else {
+				ViewBag.PossibleParentCategories = categoryRepository.All;
 				return View();
 			}
         }

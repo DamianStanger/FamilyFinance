@@ -18,6 +18,9 @@
         <th>
             Bank
         </th>
+        <th>
+            Owner
+        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -32,6 +35,9 @@
         </td>
         <td>
 			@item.Bank
+        </td>
+        <td>
+			@(item.Owner == null ? "None" : item.Owner.Name)
         </td>
     </tr>
 }

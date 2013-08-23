@@ -11,6 +11,9 @@
 
     <div class="display-label">Name</div>
     <div class="display-field">@Model.Name</div>
+
+    <div class="display-label">ParentCategory</div>
+    <div class="display-field">@(Model.ParentCategory == null ? "None" : Model.ParentCategory.Name)</div>
 </fieldset>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |

@@ -18,3 +18,14 @@
     @Html.ValidationMessageFor(model => model.Bank)
 </div>
 
+<div class="editor-label">
+    Owner
+</div>
+<div class="editor-field">
+    @Html.DropDownListFor(model => model.OwnerId, ((IEnumerable<FamilyFinance.Models.Finance.Person>)ViewBag.PossibleOwners).Select(option => new SelectListItem {
+        Text = (option == null ? "None" : option.Name), 
+        Value = option.Id.ToString(),
+        Selected = (Model != null) && (option.Id == Model.OwnerId)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.OwnerId)
+</div>
