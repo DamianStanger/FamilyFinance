@@ -207,6 +207,8 @@
     <Compile Include="Models\Repository\PersonRepository.cs" />
     <Compile Include="Models\Repository\TransactionRepository.cs" />
     <Compile Include="Models\Repository\TransferRepository.cs" />
+    <Compile Include="Models\ViewModel\AccountViewModel.cs" />
+    <Compile Include="Models\ViewModel\HomeIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
