@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FamilyFinance.Areas.Admin.Models.Finance
+namespace FamilyFinance.Models.Domain
 {
     public class Transaction
     {

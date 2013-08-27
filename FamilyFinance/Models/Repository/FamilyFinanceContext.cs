@@ -1,8 +1,8 @@
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using FamilyFinance.Areas.Admin.Models.Finance;
+using FamilyFinance.Models.Domain;
 
-namespace FamilyFinance.Areas.Admin.Models
+namespace FamilyFinance.Models.Repository
 {
     public class FamilyFinanceContext : DbContext
     {

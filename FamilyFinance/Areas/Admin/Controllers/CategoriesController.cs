@@ -1,7 +1,7 @@
 using System.Web.Mvc;
-using FamilyFinance.Areas.Admin.Models;
-using FamilyFinance.Areas.Admin.Models.Finance;
 using FamilyFinance.Models;
+using FamilyFinance.Models.Domain;
+using FamilyFinance.Models.Repository;
 
 namespace FamilyFinance.Areas.Admin.Controllers
 {   

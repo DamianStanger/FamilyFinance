@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
-using FamilyFinance.Areas.Admin.Models.Finance;
+using FamilyFinance.Models.Domain;
 
-namespace FamilyFinance.Areas.Admin.Models
+namespace FamilyFinance.Models.Repository
 {
     public class FamilyFinanceInitialiser : DropCreateDatabaseAlways<FamilyFinanceContext>
     {

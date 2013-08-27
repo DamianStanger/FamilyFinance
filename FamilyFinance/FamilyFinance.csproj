@@ -195,18 +195,18 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Areas\Admin\Models\AccountRepository.cs" />
-    <Compile Include="Areas\Admin\Models\CategoryRepository.cs" />
-    <Compile Include="Areas\Admin\Models\FamilyFinanceContext.cs" />
-    <Compile Include="Areas\Admin\Models\FamilyFinanceInitialiser.cs" />
-    <Compile Include="Areas\Admin\Models\Finance\Account.cs" />
-    <Compile Include="Areas\Admin\Models\Finance\Category.cs" />
-    <Compile Include="Areas\Admin\Models\Finance\Person.cs" />
-    <Compile Include="Areas\Admin\Models\Finance\Transaction.cs" />
-    <Compile Include="Areas\Admin\Models\Finance\Transfer.cs" />
-    <Compile Include="Areas\Admin\Models\PersonRepository.cs" />
-    <Compile Include="Areas\Admin\Models\TransactionRepository.cs" />
-    <Compile Include="Areas\Admin\Models\TransferRepository.cs" />
+    <Compile Include="Models\Repository\AccountRepository.cs" />
+    <Compile Include="Models\Repository\CategoryRepository.cs" />
+    <Compile Include="Models\Repository\FamilyFinanceContext.cs" />
+    <Compile Include="Models\Repository\FamilyFinanceInitialiser.cs" />
+    <Compile Include="Models\Domain\Account.cs" />
+    <Compile Include="Models\Domain\Category.cs" />
+    <Compile Include="Models\Domain\Person.cs" />
+    <Compile Include="Models\Domain\Transaction.cs" />
+    <Compile Include="Models\Domain\Transfer.cs" />
+    <Compile Include="Models\Repository\PersonRepository.cs" />
+    <Compile Include="Models\Repository\TransactionRepository.cs" />
+    <Compile Include="Models\Repository\TransferRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -357,8 +357,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\Domain\" />
-    <Folder Include="Models\Repository\" />
+    <Folder Include="Areas\Admin\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

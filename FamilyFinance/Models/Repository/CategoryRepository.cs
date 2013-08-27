@@ -3,23 +3,22 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using FamilyFinance.Areas.Admin.Models.Finance;
-using FamilyFinance.Models;
+using FamilyFinance.Models.Domain;
 
-namespace FamilyFinance.Areas.Admin.Models
+namespace FamilyFinance.Models.Repository
 { 
     public class CategoryRepository : ICategoryRepository
     {
-        FamilyFinanceContext context = new FamilyFinanceContext();
+        readonly FamilyFinanceContext _context = new FamilyFinanceContext();
 
         public IQueryable<Category> All
         {
-            get { return context.Categories; }
+            get { return _context.Categories; }
         }
 
         public IQueryable<Category> AllIncluding(params Expression<Func<Category, object>>[] includeProperties)
         {
-            IQueryable<Category> query = context.Categories;
+            IQueryable<Category> query = _context.Categories;
             foreach (var includeProperty in includeProperties) {
                 query = query.Include(includeProperty);
             }
@@ -28,34 +27,34 @@ namespace FamilyFinance.Areas.Admin.Models
 
         public Category Find(int id)
         {
-            return context.Categories.Find(id);
+            return _context.Categories.Find(id);
         }
 
         public void InsertOrUpdate(Category category)
         {
             if (category.Id == default(int)) {
                 // New entity
-                context.Categories.Add(category);
+                _context.Categories.Add(category);
             } else {
                 // Existing entity
-                context.Entry(category).State = EntityState.Modified;
+                _context.Entry(category).State = EntityState.Modified;
             }
         }
 
         public void Delete(int id)
         {
-            var category = context.Categories.Find(id);
-            context.Categories.Remove(category);
+            var category = _context.Categories.Find(id);
+            _context.Categories.Remove(category);
         }
 
         public void Save()
         {
-            context.SaveChanges();
+            _context.SaveChanges();
         }
 
         public void Dispose() 
         {
-            context.Dispose();
+            _context.Dispose();
         }
     }
 
