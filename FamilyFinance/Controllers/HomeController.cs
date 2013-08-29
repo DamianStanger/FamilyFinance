@@ -36,11 +36,12 @@ namespace FamilyFinance.Controllers
                 if (transactions.Any())
                 {
                     var sum = transactions.Sum(x => x.Amount);
+                    AccountViewModel accountViewModel;
                     switch (account.AccountTypeId)
                     {
                         case AccountType.Debit:
                             viewModel.Totals.Debit += sum;
-                            var accountViewModel = new AccountViewModel() { balance = sum, name = account.Name, Id = account.Id };
+                            accountViewModel = new AccountViewModel() { balance = sum, name = account.Name, Id = account.Id };
                             viewModel.Accounts.Debit.Add(accountViewModel);
                             break;
                         case AccountType.Credit:

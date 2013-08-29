@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using FamilyFinance.App_Start;
 using FamilyFinance.Models;
 using FamilyFinance.Models.Repository;
 

@@ -1,0 +1,12 @@
+﻿@model IQueryable<FamilyFinance.Models.Domain.Transaction>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";            
+}
+
+<h2>title</h2>
+@foreach (var transaction in Model)
+{
+    <p>@transaction.Date.ToShortDateString() @transaction.Name @transaction.Category.Name @transaction.Amount</p>
+}
