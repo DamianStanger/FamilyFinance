@@ -33,29 +33,34 @@ namespace FamilyFinance.Controllers
             foreach (var account in accounts)
             {
                 var transactions = transactionRepository.All.Where(x => x.AccountId == account.Id);
-                var sum = 0d;
                 if (transactions.Any())
                 {
-                    sum = transactions.Sum(x => x.Amount);
+                    var sum = transactions.Sum(x => x.Amount);
                     switch (account.AccountTypeId)
                     {
                         case AccountType.Debit:
                             viewModel.Totals.Debit += sum;
+                            var accountViewModel = new AccountViewModel() { balance = sum, name = account.Name, Id = account.Id };
+                            viewModel.Accounts.Debit.Add(accountViewModel);
                             break;
                         case AccountType.Credit:
                             viewModel.Totals.Credit += sum;
+                            accountViewModel = new AccountViewModel() { balance = sum, name = account.Name, Id = account.Id };
+                            viewModel.Accounts.Credit.Add(accountViewModel);
                             break;
                         case AccountType.Savings:
                             viewModel.Totals.Savings += sum;
+                            accountViewModel = new AccountViewModel() { balance = sum, name = account.Name, Id = account.Id };
+                            viewModel.Accounts.Savings.Add(accountViewModel);
                             break;
                         case AccountType.Loan:
                             viewModel.Totals.Loan += sum;
+                            accountViewModel = new AccountViewModel() { balance = sum, name = account.Name, Id = account.Id };
+                            viewModel.Accounts.Loan.Add(accountViewModel);
                             break;
                     }
-                }
-                var accountViewModel = new AccountViewModel() {balance = sum, name = account.Name, Id = account.Id};
-                viewModel.Accounts.Add(accountViewModel);
-                viewModel.Totals.Total += sum;
+                    viewModel.Totals.Total += sum;
+                }                
             }
 
             return View(viewModel);

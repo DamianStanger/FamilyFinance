@@ -5,12 +5,28 @@ namespace FamilyFinance.Models.ViewModel
     {
         public HomeIndex()
         {
-            Accounts = new List<AccountViewModel>();
+            Accounts = new Accounts();
             Totals = new Totals();
         }
 
-        public IList<AccountViewModel> Accounts { get; private set; }
-        public Totals Totals { get; set; }
+        public Accounts Accounts { get; private set; }
+        public Totals Totals { get; private set; }
+    }
+
+    public class Accounts 
+    {
+        public Accounts()
+        {
+            Debit = new List<AccountViewModel>();
+            Credit = new List<AccountViewModel>();
+            Savings = new List<AccountViewModel>();
+            Loan = new List<AccountViewModel>();
+        }
+
+        public IList<AccountViewModel> Debit { get; set; }
+        public IList<AccountViewModel> Credit { get; set; }
+        public IList<AccountViewModel> Savings { get; set; }
+        public IList<AccountViewModel> Loan { get; set; }
     }
 
     public class Totals

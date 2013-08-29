@@ -18,13 +18,10 @@
     </section>
 }
 <h2>Account Summary - Total Avaliable: @Model.Totals.Total</h2>
-<h3>Account Summary - Debit: @Model.Totals.Debit</h3>
-<h3>Account Summary - Savings: @Model.Totals.Savings</h3>
-<h3>Account Summary - Credit: @Model.Totals.Credit</h3>
-<h3>Account Summary - Loans: @Model.Totals.Loan</h3>
 
-<ol class="round">
-@foreach(var account in Model.Accounts)
+<h3>Account Summary - Debit: @Model.Totals.Debit</h3>
+<ol>
+@foreach(var account in Model.Accounts.Debit)
 {
     <li>
         <h4>@account.name: @account.balance</h4>        
@@ -32,3 +29,32 @@
 }
 </ol>
 
+<h3>Account Summary - Savings: @Model.Totals.Savings</h3>
+<ol>
+    @foreach(var account in Model.Accounts.Savings)
+    {
+        <li>
+            <h4>@account.name: @account.balance</h4>        
+        </li>
+    }
+</ol>
+
+<h3>Account Summary - Credit: @Model.Totals.Credit</h3>
+<ol>
+    @foreach(var account in Model.Accounts.Credit)
+    {
+        <li>
+            <h4>@account.name: @account.balance</h4>        
+        </li>
+    }
+</ol>
+
+<h3>Account Summary - Loans: @Model.Totals.Loan</h3>
+<ol>
+@foreach(var account in Model.Accounts.Loan)
+{
+    <li>
+        <h4>@account.name: @account.balance</h4>        
+    </li>
+}
+</ol>
