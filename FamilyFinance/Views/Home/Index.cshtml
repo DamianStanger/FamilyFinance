@@ -17,12 +17,18 @@
         </div>
     </section>
 }
-<h3>Account Summary - TotalAvaliable: @Model.Total</h3>
+<h2>Account Summary - Total Avaliable: @Model.Totals.Total</h2>
+<h3>Account Summary - Debit: @Model.Totals.Debit</h3>
+<h3>Account Summary - Savings: @Model.Totals.Savings</h3>
+<h3>Account Summary - Credit: @Model.Totals.Credit</h3>
+<h3>Account Summary - Loans: @Model.Totals.Loan</h3>
+
 <ol class="round">
 @foreach(var account in Model.Accounts)
 {
-    <li class="one">
+    <li>
         <h4>@account.name: @account.balance</h4>        
     </li>
 }
 </ol>
+

@@ -30,13 +30,13 @@ namespace FamilyFinance.Models.Repository
             context.People.Add(kat);
             context.People.Add(cara);
 
-            var debit = new AccountType() {Name = "Debit"};
-            var credit = new AccountType() {Name = "Credit"};
-            var savings = new AccountType() {Name = "Savings"};
-            var loan = new AccountType() {Name = "Loan"};
+            var debit = new AccountType() {Name = "Debit", Id = AccountType.Debit};
+            var savings = new AccountType() { Name = "Savings", Id = AccountType.Savings };
+            var credit = new AccountType() { Name = "Credit", Id = AccountType.Credit };
+            var loan = new AccountType() { Name = "Loan", Id = AccountType.Loan };
             context.AccountTypes.Add(debit);
-            context.AccountTypes.Add(credit);
             context.AccountTypes.Add(savings);
+            context.AccountTypes.Add(credit);
             context.AccountTypes.Add(loan);
 
             DamoBarclaysCurrent = new Account { Bank = "Barclays", Name = "Damo Current", Owner = damo, AccountType = debit};

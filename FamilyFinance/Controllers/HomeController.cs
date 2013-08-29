@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
+using FamilyFinance.Models.Domain;
 using FamilyFinance.Models.Repository;
 using FamilyFinance.Models.ViewModel;
 
@@ -31,7 +29,7 @@ namespace FamilyFinance.Controllers
             ViewBag.Message = "Account Overview";
 
             var accounts = accountRepository.All;
-            var total = 0d;
+            
             foreach (var account in accounts)
             {
                 var transactions = transactionRepository.All.Where(x => x.AccountId == account.Id);
@@ -39,14 +37,27 @@ namespace FamilyFinance.Controllers
                 if (transactions.Any())
                 {
                     sum = transactions.Sum(x => x.Amount);
-                    
+                    switch (account.AccountTypeId)
+                    {
+                        case AccountType.Debit:
+                            viewModel.Totals.Debit += sum;
+                            break;
+                        case AccountType.Credit:
+                            viewModel.Totals.Credit += sum;
+                            break;
+                        case AccountType.Savings:
+                            viewModel.Totals.Savings += sum;
+                            break;
+                        case AccountType.Loan:
+                            viewModel.Totals.Loan += sum;
+                            break;
+                    }
                 }
                 var accountViewModel = new AccountViewModel() {balance = sum, name = account.Name, Id = account.Id};
                 viewModel.Accounts.Add(accountViewModel);
-                total += sum;
+                viewModel.Totals.Total += sum;
             }
 
-            viewModel.Total = total;
             return View(viewModel);
         }
 
