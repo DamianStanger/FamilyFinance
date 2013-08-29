@@ -7,7 +7,7 @@ namespace FamilyFinance.Models.Repository
     public class FamilyFinanceInitialiser : DropCreateDatabaseAlways<FamilyFinanceContext>
     {
         private Account DamoBarclaysCurrent;
-        private Account BarcalysJoint;
+        private Account JointBarcalys;
         private Account DamoBarclaysSavings;
         private Account CaraBarclaysSavings;
         private Account DamoLloydsCurrent;
@@ -30,25 +30,25 @@ namespace FamilyFinance.Models.Repository
             context.People.Add(kat);
             context.People.Add(cara);
 
-            var Debit = new AccountType() {Name = "Debit"};
-            var Credit = new AccountType() {Name = "Credit"};
-            var Savings = new AccountType() {Name = "Savings"};
-            var Loan = new AccountType() {Name = "Loan"};
-            context.AccountTypes.Add(Debit);
-            context.AccountTypes.Add(Credit);
-            context.AccountTypes.Add(Savings);
-            context.AccountTypes.Add(Loan);
+            var debit = new AccountType() {Name = "Debit"};
+            var credit = new AccountType() {Name = "Credit"};
+            var savings = new AccountType() {Name = "Savings"};
+            var loan = new AccountType() {Name = "Loan"};
+            context.AccountTypes.Add(debit);
+            context.AccountTypes.Add(credit);
+            context.AccountTypes.Add(savings);
+            context.AccountTypes.Add(loan);
 
-            DamoBarclaysCurrent = new Account { Bank = "Barclays", Name = "Damo Current", Owner = damo, AccountType = Debit};
-            BarcalysJoint = new Account { Bank = "Barclays", Name = "Joint Current", Owner = damo, AccountType = Debit };
-            DamoBarclaysSavings = new Account { Bank = "Barclays", Name = "Damo Savings", Owner = damo, AccountType = Savings };
-            CaraBarclaysSavings = new Account { Bank = "Barclays", Name = "Cara Savings", Owner = kat, AccountType = Savings };
-            DamoLloydsCurrent = new Account { Bank = "Lloyds", Name = "Damo Curent 2", Owner = damo, AccountType = Debit };
-            DamoLloydsIsa = new Account { Bank = "Lloyds", Name = "Damo ISA", Owner = damo, AccountType = Savings };
-            DamoBarclaycard = new Account { Bank = "Barclaycard", Name = "Damo Barclaycard", Owner = damo, AccountType = Credit };
-            JointBarclaycard = new Account { Bank = "Barclaycard", Name = "Joint Barclaycard", Owner = damo, AccountType = Credit };
+            DamoBarclaysCurrent = new Account { Bank = "Barclays", Name = "Damo Current", Owner = damo, AccountType = debit};
+            JointBarcalys = new Account { Bank = "Barclays", Name = "Joint Current", Owner = damo, AccountType = debit };
+            DamoBarclaysSavings = new Account { Bank = "Barclays", Name = "Damo Savings", Owner = damo, AccountType = savings };
+            CaraBarclaysSavings = new Account { Bank = "Barclays", Name = "Cara Savings", Owner = kat, AccountType = savings };
+            DamoLloydsCurrent = new Account { Bank = "Lloyds", Name = "Damo Curent 2", Owner = damo, AccountType = debit };
+            DamoLloydsIsa = new Account { Bank = "Lloyds", Name = "Damo ISA", Owner = damo, AccountType = savings };
+            DamoBarclaycard = new Account { Bank = "Barclaycard", Name = "Damo Barclaycard", Owner = damo, AccountType = credit };
+            JointBarclaycard = new Account { Bank = "Barclaycard", Name = "Joint Barclaycard", Owner = damo, AccountType = credit };
             context.Accounts.Add(DamoBarclaysCurrent);
-            context.Accounts.Add(BarcalysJoint);
+            context.Accounts.Add(JointBarcalys);
             context.Accounts.Add(DamoBarclaysSavings);
             context.Accounts.Add(CaraBarclaysSavings);
             context.Accounts.Add(DamoLloydsCurrent);
@@ -115,7 +115,7 @@ namespace FamilyFinance.Models.Repository
 
             context.Transactions.Add(new Transaction()
             {
-                Account = BarcalysJoint,
+                Account = JointBarcalys,
                 Amount = 1500d,
                 Category = initialDepositCategory,
                 Date = DateTime.Now,
