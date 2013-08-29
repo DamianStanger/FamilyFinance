@@ -30,5 +30,7 @@ namespace FamilyFinance.Models.Repository
         {
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
+
+        public DbSet<FamilyFinance.Models.Domain.AccountType> AccountTypes { get; set; }
     }
 }

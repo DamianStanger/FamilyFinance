@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using FamilyFinance.Models.Domain;
 
 namespace FamilyFinance.Models.Repository
-{ 
+{
     public class AccountRepository : IAccountRepository
     {
         FamilyFinanceContext context = new FamilyFinanceContext();
@@ -19,7 +19,8 @@ namespace FamilyFinance.Models.Repository
         public IQueryable<Account> AllIncluding(params Expression<Func<Account, object>>[] includeProperties)
         {
             IQueryable<Account> query = context.Accounts;
-            foreach (var includeProperty in includeProperties) {
+            foreach (var includeProperty in includeProperties)
+            {
                 query = query.Include(includeProperty);
             }
             return query;
@@ -32,10 +33,13 @@ namespace FamilyFinance.Models.Repository
 
         public void InsertOrUpdate(Account account)
         {
-            if (account.Id == default(int)) {
+            if (account.Id == default(int))
+            {
                 // New entity
                 context.Accounts.Add(account);
-            } else {
+            }
+            else
+            {
                 // Existing entity
                 context.Entry(account).State = EntityState.Modified;
             }
@@ -52,7 +56,7 @@ namespace FamilyFinance.Models.Repository
             context.SaveChanges();
         }
 
-        public void Dispose() 
+        public void Dispose()
         {
             context.Dispose();
         }

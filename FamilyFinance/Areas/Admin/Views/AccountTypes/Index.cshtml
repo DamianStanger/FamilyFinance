@@ -1,4 +1,4 @@
-@model IEnumerable<FamilyFinance.Models.Domain.Account>
+@model IEnumerable<FamilyFinance.Models.Domain.AccountType>
 
 @{
     ViewBag.Title = "Index";
@@ -15,15 +15,6 @@
         <th>
             Name
         </th>
-        <th>
-            Bank
-        </th>
-        <th>
-            Owner
-        </th>
-        <th>
-            AccountType
-        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -35,15 +26,6 @@
         </td>
         <td>
 			@item.Name
-        </td>
-        <td>
-			@item.Bank
-        </td>
-        <td>
-			@(item.Owner == null ? "None" : item.Owner.Name)
-        </td>
-        <td>
-			@(item.AccountType == null ? "None" : item.AccountType.Name)
         </td>
     </tr>
 }

@@ -1,5 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
-using FamilyFinance.Models;
 using FamilyFinance.Models.Domain;
 using FamilyFinance.Models.Repository;
 
@@ -8,16 +11,18 @@ namespace FamilyFinance.Areas.Admin.Controllers
     public class AccountsController : Controller
     {
 		private readonly IPersonRepository personRepository;
+		private readonly IAccountTypeRepository accounttypeRepository;
 		private readonly IAccountRepository accountRepository;
 
 		// If you are using Dependency Injection, you can delete the following constructor
-        public AccountsController() : this(new PersonRepository(), new AccountRepository())
+        public AccountsController() : this(new PersonRepository(), new AccountTypeRepository(), new AccountRepository())
         {
         }
 
-        public AccountsController(IPersonRepository personRepository, IAccountRepository accountRepository)
+        public AccountsController(IPersonRepository personRepository, IAccountTypeRepository accounttypeRepository, IAccountRepository accountRepository)
         {
 			this.personRepository = personRepository;
+			this.accounttypeRepository = accounttypeRepository;
 			this.accountRepository = accountRepository;
         }
 
@@ -26,7 +31,7 @@ namespace FamilyFinance.Areas.Admin.Controllers
 
         public ViewResult Index()
         {
-            return View(accountRepository.AllIncluding(account => account.Owner));
+            return View(accountRepository.AllIncluding(account => account.Owner, account => account.AccountType));
         }
 
         //
@@ -43,6 +48,7 @@ namespace FamilyFinance.Areas.Admin.Controllers
         public ActionResult Create()
         {
 			ViewBag.PossibleOwners = personRepository.All;
+			ViewBag.PossibleAccountTypes = accounttypeRepository.All;
             return View();
         } 
 
@@ -58,6 +64,7 @@ namespace FamilyFinance.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             } else {
 				ViewBag.PossibleOwners = personRepository.All;
+				ViewBag.PossibleAccountTypes = accounttypeRepository.All;
 				return View();
 			}
         }
@@ -68,6 +75,7 @@ namespace FamilyFinance.Areas.Admin.Controllers
         public ActionResult Edit(int id)
         {
 			ViewBag.PossibleOwners = personRepository.All;
+			ViewBag.PossibleAccountTypes = accounttypeRepository.All;
              return View(accountRepository.Find(id));
         }
 
@@ -83,6 +91,7 @@ namespace FamilyFinance.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             } else {
 				ViewBag.PossibleOwners = personRepository.All;
+				ViewBag.PossibleAccountTypes = accounttypeRepository.All;
 				return View();
 			}
         }
@@ -111,6 +120,7 @@ namespace FamilyFinance.Areas.Admin.Controllers
         {
             if (disposing) {
                 personRepository.Dispose();
+                accounttypeRepository.Dispose();
                 accountRepository.Dispose();
             }
             base.Dispose(disposing);

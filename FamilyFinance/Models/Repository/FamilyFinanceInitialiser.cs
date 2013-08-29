@@ -30,14 +30,23 @@ namespace FamilyFinance.Models.Repository
             context.People.Add(kat);
             context.People.Add(cara);
 
-            DamoBarclaysCurrent = new Account { Bank = "Barclays", Name = "Damo Current", Owner = damo};
-            BarcalysJoint = new Account { Bank = "Barclays", Name = "Joint Current", Owner = damo };
-            DamoBarclaysSavings = new Account { Bank = "Barclays", Name = "Damo Savings", Owner = damo };
-            CaraBarclaysSavings = new Account { Bank = "Barclays", Name = "Cara Savings", Owner = kat };
-            DamoLloydsCurrent = new Account { Bank = "Lloyds", Name = "Damo Curent 2", Owner = damo };
-            DamoLloydsIsa = new Account { Bank = "Lloyds", Name = "Damo ISA", Owner = damo };
-            DamoBarclaycard = new Account { Bank = "Barclaycard", Name = "Damo Barclaycard", Owner = damo };
-            JointBarclaycard = new Account { Bank = "Barclaycard", Name = "Joint Barclaycard", Owner = damo };
+            var Debit = new AccountType() {Name = "Debit"};
+            var Credit = new AccountType() {Name = "Credit"};
+            var Savings = new AccountType() {Name = "Savings"};
+            var Loan = new AccountType() {Name = "Loan"};
+            context.AccountTypes.Add(Debit);
+            context.AccountTypes.Add(Credit);
+            context.AccountTypes.Add(Savings);
+            context.AccountTypes.Add(Loan);
+
+            DamoBarclaysCurrent = new Account { Bank = "Barclays", Name = "Damo Current", Owner = damo, AccountType = Debit};
+            BarcalysJoint = new Account { Bank = "Barclays", Name = "Joint Current", Owner = damo, AccountType = Debit };
+            DamoBarclaysSavings = new Account { Bank = "Barclays", Name = "Damo Savings", Owner = damo, AccountType = Savings };
+            CaraBarclaysSavings = new Account { Bank = "Barclays", Name = "Cara Savings", Owner = kat, AccountType = Savings };
+            DamoLloydsCurrent = new Account { Bank = "Lloyds", Name = "Damo Curent 2", Owner = damo, AccountType = Debit };
+            DamoLloydsIsa = new Account { Bank = "Lloyds", Name = "Damo ISA", Owner = damo, AccountType = Savings };
+            DamoBarclaycard = new Account { Bank = "Barclaycard", Name = "Damo Barclaycard", Owner = damo, AccountType = Credit };
+            JointBarclaycard = new Account { Bank = "Barclaycard", Name = "Joint Barclaycard", Owner = damo, AccountType = Credit };
             context.Accounts.Add(DamoBarclaysCurrent);
             context.Accounts.Add(BarcalysJoint);
             context.Accounts.Add(DamoBarclaysSavings);
