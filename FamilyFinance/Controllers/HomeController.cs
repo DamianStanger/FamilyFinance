@@ -31,6 +31,7 @@ namespace FamilyFinance.Controllers
             ViewBag.Message = "Account Overview";
 
             var accounts = accountRepository.All;
+            var total = 0d;
             foreach (var account in accounts)
             {
                 var transactions = transactionRepository.All.Where(x => x.AccountId == account.Id);
@@ -42,8 +43,10 @@ namespace FamilyFinance.Controllers
                 }
                 var accountViewModel = new AccountViewModel() {balance = sum, name = account.Name, Id = account.Id};
                 viewModel.Accounts.Add(accountViewModel);
+                total += sum;
             }
 
+            viewModel.Total = total;
             return View(viewModel);
         }
 

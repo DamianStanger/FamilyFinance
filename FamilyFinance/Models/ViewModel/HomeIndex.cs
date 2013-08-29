@@ -8,6 +8,7 @@ namespace FamilyFinance.Models.ViewModel
             Accounts = new List<AccountViewModel>();
         }
 
-        public IList<AccountViewModel> Accounts { get; private set; } 
+        public IList<AccountViewModel> Accounts { get; private set; }
+        public double Total { get; set; }
     }
 }
