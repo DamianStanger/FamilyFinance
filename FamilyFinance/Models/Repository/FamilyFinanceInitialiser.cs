@@ -14,6 +14,8 @@ namespace FamilyFinance.Models.Repository
         private Account DamoLloydsIsa;
         private Account DamoBarclaycard;
         private Account JointBarclaycard;
+        private Account DamoCash;
+        private Account KatCash;
         private Category initialDepositCategory;
         private Person damo;
         private Person kat;
@@ -34,10 +36,12 @@ namespace FamilyFinance.Models.Repository
             var savings = new AccountType() { Name = "Savings", Id = AccountType.Savings };
             var credit = new AccountType() { Name = "Credit", Id = AccountType.Credit };
             var loan = new AccountType() { Name = "Loan", Id = AccountType.Loan };
+            var cash = new AccountType() { Name = "Cash", Id = AccountType.Cash };
             context.AccountTypes.Add(debit);
             context.AccountTypes.Add(savings);
             context.AccountTypes.Add(credit);
             context.AccountTypes.Add(loan);
+            context.AccountTypes.Add(cash);
 
             DamoBarclaysCurrent = new Account { Bank = "Barclays", Name = "Damo Current", Owner = damo, AccountType = debit};
             JointBarcalys = new Account { Bank = "Barclays", Name = "Joint Current", Owner = damo, AccountType = debit };
@@ -47,6 +51,8 @@ namespace FamilyFinance.Models.Repository
             DamoLloydsIsa = new Account { Bank = "Lloyds", Name = "Damo ISA", Owner = damo, AccountType = savings };
             DamoBarclaycard = new Account { Bank = "Barclaycard", Name = "Damo Barclaycard", Owner = damo, AccountType = credit };
             JointBarclaycard = new Account { Bank = "Barclaycard", Name = "Joint Barclaycard", Owner = damo, AccountType = credit };
+            DamoCash = new Account { Bank = "Cash", Name = "Damo Cash", Owner = damo, AccountType = cash };
+            KatCash = new Account { Bank = "Cash", Name = "Kat Cash", Owner = kat, AccountType = cash };
             context.Accounts.Add(DamoBarclaysCurrent);
             context.Accounts.Add(JointBarcalys);
             context.Accounts.Add(DamoBarclaysSavings);
@@ -55,6 +61,8 @@ namespace FamilyFinance.Models.Repository
             context.Accounts.Add(DamoLloydsIsa);
             context.Accounts.Add(DamoBarclaycard);
             context.Accounts.Add(JointBarclaycard);
+            context.Accounts.Add(DamoCash);
+            context.Accounts.Add(KatCash);
 
             context.SaveChanges();
 
@@ -180,6 +188,26 @@ namespace FamilyFinance.Models.Repository
                 Category = initialDepositCategory,
                 Date = DateTime.Now,
                 Name = "initial Deposit",
+                Initiator = damo
+            });
+
+            context.Transactions.Add(new Transaction()
+            {
+                Account = DamoCash,
+                Amount = 55,
+                Category = initialDepositCategory,
+                Date = DateTime.Now,
+                Name = "Cash in pocket",
+                Initiator = damo
+            });
+
+            context.Transactions.Add(new Transaction()
+            {
+                Account = KatCash,
+                Amount = 23,
+                Category = initialDepositCategory,
+                Date = DateTime.Now,
+                Name = "Cash in pocket",
                 Initiator = damo
             });
         }

@@ -184,6 +184,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountTypesController.cs" />
     <Compile Include="Controllers\StatementsController.cs" />
+    <Compile Include="Models\ViewModel\StatementViewModel.cs" />
     <Compile Include="Models\Repository\AccountTypeRepository.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountsController.cs" />
@@ -211,8 +212,7 @@
     <Compile Include="Models\Repository\PersonRepository.cs" />
     <Compile Include="Models\Repository\TransactionRepository.cs" />
     <Compile Include="Models\Repository\TransferRepository.cs" />
-    <Compile Include="Models\ViewModel\AccountViewModel.cs" />
-    <Compile Include="Models\ViewModel\HomeIndex.cs" />
+    <Compile Include="Models\ViewModel\HomeIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

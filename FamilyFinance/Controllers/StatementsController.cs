@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using System.Web.Mvc;
 using FamilyFinance.Models.Repository;
+using FamilyFinance.Models.ViewModel;
 
 namespace FamilyFinance.Controllers
 {
@@ -37,16 +38,5 @@ namespace FamilyFinance.Controllers
                 };
             return View(viewModel);
         }
-    }
-
-    public class StatementViewModel
-    {
-        public StatementViewModel()
-        {
-        }
-
-        public string AccountName { get; set; }
-        public IQueryable<FamilyFinance.Models.Domain.Transaction> Transactions { get; set; }
-        public string StatementDate { get; set; }
     }
 }

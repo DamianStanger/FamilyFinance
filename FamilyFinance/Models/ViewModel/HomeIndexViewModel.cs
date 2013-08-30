@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 namespace FamilyFinance.Models.ViewModel
 {
-    public class HomeIndex
+    public class HomeIndexViewModel
     {
-        public HomeIndex()
+        public HomeIndexViewModel()
         {
             Accounts = new Accounts();
             Totals = new Totals();
@@ -11,6 +11,13 @@ namespace FamilyFinance.Models.ViewModel
 
         public Accounts Accounts { get; private set; }
         public Totals Totals { get; private set; }
+    }
+
+    public class AccountViewModel
+    {
+        public string Name { get; set; }
+        public double Balance { get; set; }
+        public int Id { get; set; }
     }
 
     public class Accounts 
@@ -21,12 +28,14 @@ namespace FamilyFinance.Models.ViewModel
             Credit = new List<AccountViewModel>();
             Savings = new List<AccountViewModel>();
             Loan = new List<AccountViewModel>();
+            Cash = new List<AccountViewModel>();
         }
 
         public IList<AccountViewModel> Debit { get; set; }
         public IList<AccountViewModel> Credit { get; set; }
         public IList<AccountViewModel> Savings { get; set; }
         public IList<AccountViewModel> Loan { get; set; }
+        public IList<AccountViewModel> Cash { get; set; }
     }
 
     public class Totals
@@ -36,5 +45,6 @@ namespace FamilyFinance.Models.ViewModel
         public double Credit { get; set; }
         public double Savings { get; set; }
         public double Loan { get; set; }
+        public double Cash { get; set; }
     }
 }

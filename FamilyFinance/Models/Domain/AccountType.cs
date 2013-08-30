@@ -9,5 +9,6 @@
         public const int Savings = 2;
         public const int Credit = 3;
         public const int Loan = 4;
+        public const int Cash = 5;
     }
 }

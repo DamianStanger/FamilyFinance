@@ -25,7 +25,7 @@ namespace FamilyFinance.Controllers
 
         public ActionResult Index()
         {
-            var viewModel = new HomeIndex();
+            var viewModel = new HomeIndexViewModel();
             ViewBag.Message = "Account Overview";
 
             var accounts = accountRepository.All;
@@ -41,23 +41,28 @@ namespace FamilyFinance.Controllers
                     {
                         case AccountType.Debit:
                             viewModel.Totals.Debit += sum;
-                            accountViewModel = new AccountViewModel() { balance = sum, name = account.Name, Id = account.Id };
+                            accountViewModel = new AccountViewModel() { Balance = sum, Name = account.Name, Id = account.Id };
                             viewModel.Accounts.Debit.Add(accountViewModel);
                             break;
                         case AccountType.Credit:
                             viewModel.Totals.Credit += sum;
-                            accountViewModel = new AccountViewModel() { balance = sum, name = account.Name, Id = account.Id };
+                            accountViewModel = new AccountViewModel() { Balance = sum, Name = account.Name, Id = account.Id };
                             viewModel.Accounts.Credit.Add(accountViewModel);
                             break;
                         case AccountType.Savings:
                             viewModel.Totals.Savings += sum;
-                            accountViewModel = new AccountViewModel() { balance = sum, name = account.Name, Id = account.Id };
+                            accountViewModel = new AccountViewModel() { Balance = sum, Name = account.Name, Id = account.Id };
                             viewModel.Accounts.Savings.Add(accountViewModel);
                             break;
                         case AccountType.Loan:
                             viewModel.Totals.Loan += sum;
-                            accountViewModel = new AccountViewModel() { balance = sum, name = account.Name, Id = account.Id };
+                            accountViewModel = new AccountViewModel() { Balance = sum, Name = account.Name, Id = account.Id };
                             viewModel.Accounts.Loan.Add(accountViewModel);
+                            break;
+                        case AccountType.Cash:
+                            viewModel.Totals.Cash += sum;
+                            accountViewModel = new AccountViewModel() { Balance = sum, Name = account.Name, Id = account.Id };
+                            viewModel.Accounts.Cash.Add(accountViewModel);
                             break;
                     }
                     viewModel.Totals.Total += sum;

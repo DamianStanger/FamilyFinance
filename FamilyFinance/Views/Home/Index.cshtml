@@ -1,4 +1,4 @@
-﻿@model FamilyFinance.Models.ViewModel.HomeIndex
+﻿@model FamilyFinance.Models.ViewModel.HomeIndexViewModel
 @{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";        
@@ -19,12 +19,22 @@
 }
 <h2>Account Summary - Total Avaliable: @Model.Totals.Total</h2>
 
+<h3>Account Summary - Cash: @Model.Totals.Cash</h3>
+<ol>
+@foreach(var account in Model.Accounts.Cash)
+{
+    <li>
+        <h4>@account.Name: @account.Balance</h4>   
+    </li>
+}
+</ol>
+
 <h3>Account Summary - Debit: @Model.Totals.Debit</h3>
 <ol>
 @foreach(var account in Model.Accounts.Debit)
 {
     <li>
-        <h4>@account.name: @account.balance</h4>        
+        <h4>@account.Name: @account.Balance</h4>        
     </li>
 }
 </ol>
@@ -34,7 +44,7 @@
     @foreach(var account in Model.Accounts.Savings)
     {
         <li>
-            <h4>@account.name: @account.balance</h4>        
+            <h4>@account.Name: @account.Balance</h4>        
         </li>
     }
 </ol>
@@ -44,7 +54,7 @@
     @foreach(var account in Model.Accounts.Credit)
     {
         <li>
-            <h4>@account.name: @account.balance</h4>        
+            <h4>@account.Name: @account.Balance</h4>        
         </li>
     }
 </ol>
@@ -54,7 +64,7 @@
 @foreach(var account in Model.Accounts.Loan)
 {
     <li>
-        <h4>@account.name: @account.balance</h4>        
+        <h4>@account.Name: @account.Balance</h4>        
     </li>
 }
 </ol>
