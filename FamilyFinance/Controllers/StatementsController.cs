@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections;
+using System.Linq;
 using System.Web.Mvc;
 using FamilyFinance.Models.Repository;
 
@@ -24,8 +26,27 @@ namespace FamilyFinance.Controllers
         public ActionResult Statement(int accountId, int year, int month)
         {
             var account = accountRepository.Find(accountId);
-            var transactions = transactionRepository.All.Where(x => x.AccountId == accountId && x.Date.Year == year && x.Date.Month == month);
-            return View(transactions);
+            var date = new DateTime(year, month, 1).ToLongDateString().Replace("01 ", "");
+            var viewModel = new StatementViewModel
+                {
+                    AccountName = account.Name,
+                    StatementDate = date,
+                    Transactions =
+                        transactionRepository.All.Where(
+                            x => x.AccountId == accountId && x.Date.Year == year && x.Date.Month == month)
+                };
+            return View(viewModel);
         }
+    }
+
+    public class StatementViewModel
+    {
+        public StatementViewModel()
+        {
+        }
+
+        public string AccountName { get; set; }
+        public IQueryable<FamilyFinance.Models.Domain.Transaction> Transactions { get; set; }
+        public string StatementDate { get; set; }
     }
 }
