@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using FamilyFinance.Models.Repository;
@@ -27,7 +28,7 @@ namespace FamilyFinance.Controllers
         public ActionResult Statement(int accountId, int year, int month)
         {
             var account = accountRepository.Find(accountId);
-            var date = new DateTime(year, month, 1).ToLongDateString().Replace("01 ", "");
+            var date = GetMonthYearDate(year, month);
             var viewModel = new StatementViewModel
                 {
                     AccountName = account.Name,
@@ -38,5 +39,50 @@ namespace FamilyFinance.Controllers
                 };
             return View(viewModel);
         }
+
+        private static string GetMonthYearDate(int year, int month)
+        {
+            return new DateTime(year, month, 1).ToLongDateString().Replace("01 ", "");
+        }
+
+        public ActionResult Statements(int accountId)
+        {
+            var statementViewModels = new List<StatementOverviewViewModel>();
+            
+            var transactions = transactionRepository.All.Where(x => x.AccountId == accountId)
+                .Select(x => new {x.Amount, x.Date.Month, x.Date.Year})
+                .GroupBy(x => x.Year & x.Month);
+
+            foreach (var statementCollection in transactions)
+            {
+                var sum = statementCollection.Sum(x => x.Amount);
+                var year = statementCollection.First().Year;
+                var month = statementCollection.First().Month;
+
+                var statementOverviewViewModel = new StatementOverviewViewModel() {Amount = sum, statementDate = GetMonthYearDate(year, month)};
+                statementViewModels.Add(statementOverviewViewModel);
+            }
+
+            var account = accountRepository.Find(accountId);
+            var viewModel = new StatementsViewModel
+            {
+                AccountName = account.Name,
+                Statements = statementViewModels
+            };
+
+            return View(viewModel);
+        }
+    }
+
+    public class StatementsViewModel
+    {
+        public string AccountName { get; set; }
+        public List<StatementOverviewViewModel> Statements { get; set; }
+    }
+
+    public class StatementOverviewViewModel
+    {
+        public double Amount { get; set; }
+        public string statementDate { get; set; }
     }
 }

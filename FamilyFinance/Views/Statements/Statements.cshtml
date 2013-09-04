@@ -1,0 +1,12 @@
+﻿@model FamilyFinance.Controllers.StatementsViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Avaliable Statements for @Model.AccountName</h2>
+@foreach (var statement in Model.Statements)
+{
+    <p>@statement.statementDate - £@statement.Amount</p>
+}

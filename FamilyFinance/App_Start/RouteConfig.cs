@@ -10,9 +10,15 @@ namespace FamilyFinance.App_Start
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Statements",
+                name: "Statement",
                 url: "Accounts/{accountId}/statements/{year}/{month}",
                 defaults: new {controller = "Statements", action = "Statement"}
+            );
+
+            routes.MapRoute(
+                name: "Statements",
+                url: "Accounts/{accountId}/statements",
+                defaults: new { controller = "Statements", action = "Statements" }
             );
 
             routes.MapRoute(
