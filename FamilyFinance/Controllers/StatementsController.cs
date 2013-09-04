@@ -50,7 +50,7 @@ namespace FamilyFinance.Controllers
             var statementViewModels = new List<StatementOverviewViewModel>();
             
             var transactions = transactionRepository.All.Where(x => x.AccountId == accountId)
-                .Select(x => new {x.Amount, x.Date.Month, x.Date.Year})
+                .Select(x => new {x.Amount, x.Date.Month, x.Date.Year, x.Date})
                 .GroupBy(x => x.Year & x.Month);
 
             foreach (var statementCollection in transactions)
@@ -58,8 +58,16 @@ namespace FamilyFinance.Controllers
                 var sum = statementCollection.Sum(x => x.Amount);
                 var year = statementCollection.First().Year;
                 var month = statementCollection.First().Month;
+                var date = statementCollection.First().Date;
 
-                var statementOverviewViewModel = new StatementOverviewViewModel() {Amount = sum, statementDate = GetMonthYearDate(year, month)};
+                var statementOverviewViewModel = new StatementOverviewViewModel() 
+                {
+                    Amount = sum, 
+                    StatementDate = GetMonthYearDate(year, month),
+                    Date = date,
+                    AccountId = accountId
+                };
+
                 statementViewModels.Add(statementOverviewViewModel);
             }
 
@@ -82,7 +90,9 @@ namespace FamilyFinance.Controllers
 
     public class StatementOverviewViewModel
     {
+        public int AccountId { get; set; }
         public double Amount { get; set; }
-        public string statementDate { get; set; }
+        public string StatementDate { get; set; }
+        public DateTime Date { get; set; }
     }
 }

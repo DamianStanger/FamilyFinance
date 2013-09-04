@@ -8,5 +8,5 @@
 <h2>Avaliable Statements for @Model.AccountName</h2>
 @foreach (var statement in Model.Statements)
 {
-    <p>@statement.statementDate - £@statement.Amount</p>
+    <p>@Html.ActionLink(statement.StatementDate, "Statement", "Statements", new {accountId=statement.AccountId, Year=statement.Date.Year, Month=statement.Date.Month}, null) - £@statement.Amount</p>
 }

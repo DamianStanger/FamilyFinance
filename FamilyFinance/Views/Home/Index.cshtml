@@ -24,7 +24,7 @@
 @foreach(var account in Model.Accounts.Cash)
 {
     <li>
-        <h4>@account.Name: @account.Balance</h4>   
+        <h4>@account.Name: @account.Balance</h4> @Html.ActionLink("Statements", "Statements", "Statements", new {accountId = account.Id}, null)   
     </li>
 }
 </ol>
@@ -34,7 +34,7 @@
 @foreach(var account in Model.Accounts.Debit)
 {
     <li>
-        <h4>@account.Name: @account.Balance</h4>        
+        <h4>@account.Name: @account.Balance</h4> @Html.ActionLink("Statements", "Statements", "Statements", new {accountId = account.Id}, null)   
     </li>
 }
 </ol>
@@ -44,7 +44,7 @@
     @foreach(var account in Model.Accounts.Savings)
     {
         <li>
-            <h4>@account.Name: @account.Balance</h4>        
+            <h4>@account.Name: @account.Balance</h4> @Html.ActionLink("Statements", "Statements", "Statements", new {accountId = account.Id}, null)        
         </li>
     }
 </ol>
@@ -54,7 +54,7 @@
     @foreach(var account in Model.Accounts.Credit)
     {
         <li>
-            <h4>@account.Name: @account.Balance</h4>        
+            <h4>@account.Name: @account.Balance</h4> @Html.ActionLink("Statements", "Statements", "Statements", new {accountId = account.Id}, null)          
         </li>
     }
 </ol>
@@ -64,7 +64,7 @@
 @foreach(var account in Model.Accounts.Loan)
 {
     <li>
-        <h4>@account.Name: @account.Balance</h4>        
+        <h4>@account.Name: @account.Balance</h4> @Html.ActionLink("Statements", "Statements", "Statements", new {accountId = account.Id}, null)          
     </li>
 }
 </ol>

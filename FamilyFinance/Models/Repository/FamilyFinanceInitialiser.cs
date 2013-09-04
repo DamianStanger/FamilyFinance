@@ -123,6 +123,16 @@ namespace FamilyFinance.Models.Repository
 
             context.Transactions.Add(new Transaction()
             {
+                Account = DamoBarclaysCurrent,
+                Amount = 1300d,
+                Category = initialDepositCategory,
+                Date = DateTime.Now.AddMonths(-1),
+                Name = "initial Deposit",
+                Initiator = damo
+            });
+
+            context.Transactions.Add(new Transaction()
+            {
                 Account = JointBarcalys,
                 Amount = 1500d,
                 Category = initialDepositCategory,
