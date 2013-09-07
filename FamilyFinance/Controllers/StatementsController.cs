@@ -31,8 +31,13 @@ namespace FamilyFinance.Controllers
             var date = GetMonthYearDate(year, month);
             var viewModel = new StatementViewModel
                 {
+                    AccountId = accountId,
                     AccountName = account.Name,
                     StatementDate = date,
+                    PreviousMonth = month == 1 ? 12 : month-1,
+                    PreviousYear = month == 1 ? year-1 : year,
+                    NextMonth = month == 12 ? 1 : month+1,
+                    NextYear = month == 12 ? year+1: year,
                     Transactions =
                         transactionRepository.All.Where(
                             x => x.AccountId == accountId && x.Date.Year == year && x.Date.Month == month)

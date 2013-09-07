@@ -6,6 +6,9 @@
 }
 
 <h2>Account Statement for @Model.AccountName - @Model.StatementDate</h2>
+<span>@Html.ActionLink("Previous", "Statement", "Statements", new {accountId=Model.AccountId, Year=Model.PreviousYear, Month=Model.PreviousMonth}, null)</span>
+<span>@Html.ActionLink("Next", "Statement", "Statements", new {accountId=Model.AccountId, Year=Model.NextYear, Month=Model.NextMonth}, null)</span>
+
 @foreach (var transaction in Model.Transactions)
 {
     <p>@transaction.Date.ToShortDateString() @transaction.Name @transaction.Category.Name @transaction.Amount</p>
