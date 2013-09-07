@@ -1,0 +1,13 @@
+﻿@model IList<FamilyFinance.Models.ViewModel.AccountActivityViewModel>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Full details for all transactions for all accounts</h2>
+
+@foreach (var t in Model)
+{
+    <div><span>@t.Date.ToShortDateString()</span> <span>@t.Account</span> <span>@t.Category</span> <span>@t.Amount</span> <span>@t.RunningTotal</span></div>
+}
