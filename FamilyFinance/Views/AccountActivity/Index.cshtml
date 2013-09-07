@@ -1,4 +1,4 @@
-﻿@model IList<FamilyFinance.Models.ViewModel.AccountActivityViewModel>
+﻿@model FamilyFinance.Models.ViewModel.AccountActivityOverViewVeiwModel
 
 @{
     ViewBag.Title = "title";
@@ -7,7 +7,11 @@
 
 <h2>Full details for all transactions for all accounts</h2>
 
-@foreach (var t in Model)
+<div>
+    Money In £@Model.MoneyIn - Money Out £@Model.MoneyOut = £@(Model.MoneyIn-Model.MoneyOut)
+</div>
+
+@foreach (var t in Model.Activities)
 {
     <div><span>@t.Date.ToShortDateString()</span> <span>@t.Account</span> <span>@t.Category</span> <span>@t.Amount</span> <span>@t.RunningTotal</span></div>
 }

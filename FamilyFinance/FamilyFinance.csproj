@@ -184,7 +184,8 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountTypesController.cs" />
     <Compile Include="Controllers\AccountActivityController.cs" />
-    <Compile Include="Models\ViewModel\AccountActivityViewModel.cs" />
+    <Compile Include="Models\ViewModel\AccountActivityOverViewVeiwModel.cs" />
+    <Compile Include="Models\ViewModel\AccountActivitiesViewModel.cs" />
     <Compile Include="Controllers\StatementsController.cs" />
     <Compile Include="Models\ViewModel\StatementViewModel.cs" />
     <Compile Include="Models\Repository\AccountTypeRepository.cs" />

@@ -3,7 +3,7 @@ using FamilyFinance.Models.Domain;
 
 namespace FamilyFinance.Models.ViewModel
 {
-    public class AccountActivityViewModel
+    public class AccountActivitiesViewModel
     {
         public DateTime Date { get; set; }
         public string Category { get; set; }
@@ -13,7 +13,7 @@ namespace FamilyFinance.Models.ViewModel
         public string Name { get; set; }
         public double RunningTotal { get; set; }
 
-        public AccountActivityViewModel(Transaction transaction, double runningTotal)
+        public AccountActivitiesViewModel(Transaction transaction, double runningTotal)
         {
             Date = transaction.Date;
             Category = transaction.Category.Name;

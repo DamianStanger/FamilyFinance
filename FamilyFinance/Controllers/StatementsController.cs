@@ -29,6 +29,7 @@ namespace FamilyFinance.Controllers
         {
             var account = accountRepository.Find(accountId);
             var date = GetMonthYearDate(year, month);
+            var transactions = transactionRepository.All.Where(x => x.AccountId == accountId && x.Date.Year == year && x.Date.Month == month).ToList();
             var viewModel = new StatementViewModel
                 {
                     AccountId = accountId,
@@ -38,9 +39,9 @@ namespace FamilyFinance.Controllers
                     PreviousYear = month == 1 ? year-1 : year,
                     NextMonth = month == 12 ? 1 : month+1,
                     NextYear = month == 12 ? year+1: year,
-                    Transactions =
-                        transactionRepository.All.Where(
-                            x => x.AccountId == accountId && x.Date.Year == year && x.Date.Month == month)
+                    Transactions = transactions,
+                    MoneyIn = transactions.Sum(x => x.Amount > 0 ? x.Amount : 0),
+                    MoneyOut = transactions.Sum(x => x.Amount < 0 ? x.Amount : 0)
                 };
             return View(viewModel);
         }
@@ -53,8 +54,9 @@ namespace FamilyFinance.Controllers
         public ActionResult Statements(int accountId)
         {
             var statementViewModels = new List<StatementOverviewViewModel>();
-            
-            var transactions = transactionRepository.All.Where(x => x.AccountId == accountId)
+
+            var transactionsQueryable = transactionRepository.All.Where(x => x.AccountId == accountId);
+            var transactions = transactionsQueryable
                 .Select(x => new {x.Amount, x.Date.Month, x.Date.Year, x.Date})
                 .GroupBy(x => x.Year & x.Month);
 
@@ -80,7 +82,9 @@ namespace FamilyFinance.Controllers
             var viewModel = new StatementsViewModel
             {
                 AccountName = account.Name,
-                Statements = statementViewModels
+                Statements = statementViewModels,
+                MoneyIn = transactionsQueryable.Sum(x => x.Amount > 0 ? x.Amount : 0),
+                MoneyOut = transactionsQueryable.Sum(x => x.Amount < 0 ? x.Amount : 0)
             };
 
             return View(viewModel);
@@ -91,6 +95,8 @@ namespace FamilyFinance.Controllers
     {
         public string AccountName { get; set; }
         public List<StatementOverviewViewModel> Statements { get; set; }
+        public double MoneyIn { get; set; }
+        public double MoneyOut { get; set; }
     }
 
     public class StatementOverviewViewModel

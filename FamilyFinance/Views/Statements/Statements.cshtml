@@ -6,6 +6,11 @@
 }
 
 <h2>Avaliable Statements for @Model.AccountName</h2>
+
+<div>
+    Money In £@Model.MoneyIn - Money Out £@Model.MoneyOut = £@(Model.MoneyIn-Model.MoneyOut)
+</div>
+
 @foreach (var statement in Model.Statements)
 {
     <p>@Html.ActionLink(statement.StatementDate, "Statement", "Statements", new {accountId=statement.AccountId, Year=statement.Date.Year, Month=statement.Date.Month}, null) - £@statement.Amount</p>
