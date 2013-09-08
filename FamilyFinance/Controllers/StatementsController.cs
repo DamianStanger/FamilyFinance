@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using FamilyFinance.Models.Domain;
 using FamilyFinance.Models.Repository;
 using FamilyFinance.Models.ViewModel;
 
@@ -12,16 +12,20 @@ namespace FamilyFinance.Controllers
     {
         private readonly IAccountRepository accountRepository;
         private readonly ITransactionRepository transactionRepository;
+        private readonly ITransferRepository transferRepository;
 
 		// If you are using Dependency Injection, you can delete the following constructor
-        public StatementsController() : this(new AccountRepository(), new TransactionRepository())
+        public StatementsController() : this(new AccountRepository(), new TransactionRepository(), new TransferRepository())
         {
         }
 
-        public StatementsController(IAccountRepository accountRepository, TransactionRepository transactionRepository)
+        public StatementsController(IAccountRepository accountRepository, 
+                                    ITransactionRepository transactionRepository, 
+                                    ITransferRepository transferRepository)
         {
             this.accountRepository = accountRepository;
             this.transactionRepository = transactionRepository;
+            this.transferRepository = transferRepository;
         }
 
 
@@ -29,7 +33,22 @@ namespace FamilyFinance.Controllers
         {
             var account = accountRepository.Find(accountId);
             var date = GetMonthYearDate(year, month);
+            
             var transactions = transactionRepository.All.Where(x => x.AccountId == accountId && x.Date.Year == year && x.Date.Month == month).ToList();
+            var transfersOut = transferRepository.All.Where(x => x.AccountId == accountId && x.Date.Year == year && x.Date.Month == month).ToList();
+            var transfersIn = transferRepository.All.Where(x => x.ToAccountId == accountId && x.Date.Year == year && x.Date.Month == month).ToList();
+
+            foreach (var transfer in transfersOut)
+            {
+                transfer.Amount = -transfer.Amount;
+            }
+
+            var activities = new List<IAccountActivity>();
+            activities.AddRange(transactions);
+            activities.AddRange(transfersOut);
+            activities.AddRange(transfersIn);
+            activities = activities.OrderByDescending(x => x.Date).ToList();
+
             var viewModel = new StatementViewModel
                 {
                     AccountId = accountId,
@@ -39,9 +58,9 @@ namespace FamilyFinance.Controllers
                     PreviousYear = month == 1 ? year-1 : year,
                     NextMonth = month == 12 ? 1 : month+1,
                     NextYear = month == 12 ? year+1: year,
-                    Transactions = transactions,
-                    MoneyIn = transactions.Sum(x => x.Amount > 0 ? x.Amount : 0),
-                    MoneyOut = transactions.Sum(x => x.Amount < 0 ? x.Amount : 0)
+                    Activities = activities,
+                    MoneyIn = activities.Sum(x => x.Amount > 0 ? x.Amount : 0),
+                    MoneyOut = activities.Sum(x => x.Amount < 0 ? x.Amount : 0)
                 };
             return View(viewModel);
         }
@@ -54,13 +73,15 @@ namespace FamilyFinance.Controllers
         public ActionResult Statements(int accountId)
         {
             var statementViewModels = new List<StatementOverviewViewModel>();
+            
+            var transactions = GetTransactions(accountId);
+            var transfers = GetTransfers(accountId);
 
-            var transactionsQueryable = transactionRepository.All.Where(x => x.AccountId == accountId);
-            var transactions = transactionsQueryable
-                .Select(x => new {x.Amount, x.Date.Month, x.Date.Year, x.Date})
+            var allStatements = transactions.Concat(transfers)
+                .OrderByDescending(x=>x.Date)
                 .GroupBy(x => x.Year & x.Month);
 
-            foreach (var statementCollection in transactions)
+            foreach (var statementCollection in allStatements)
             {
                 var sum = statementCollection.Sum(x => x.Amount);
                 var year = statementCollection.First().Year;
@@ -83,27 +104,40 @@ namespace FamilyFinance.Controllers
             {
                 AccountName = account.Name,
                 Statements = statementViewModels,
-                MoneyIn = transactionsQueryable.Sum(x => x.Amount > 0 ? x.Amount : 0),
-                MoneyOut = transactionsQueryable.Sum(x => x.Amount < 0 ? x.Amount : 0)
+                MoneyIn = transactions.Concat(transfers).Sum(x => x.Amount > 0 ? x.Amount : 0),
+                MoneyOut = transactions.Concat(transfers).Sum(x => x.Amount < 0 ? x.Amount : 0)
             };
 
             return View(viewModel);
         }
-    }
 
-    public class StatementsViewModel
-    {
-        public string AccountName { get; set; }
-        public List<StatementOverviewViewModel> Statements { get; set; }
-        public double MoneyIn { get; set; }
-        public double MoneyOut { get; set; }
-    }
+        private List<StatementDto> GetTransfers(int accountId)
+        {
+            var transfersOut = transferRepository.All.Where(x => x.AccountId == accountId);
+            List<StatementDto> transfers = transfersOut
+                .Select(x => new StatementDto{Amount = -x.Amount, Month = x.Date.Month, Year = x.Date.Year, Date = x.Date}).ToList();
+            
+            var transfersIn = transferRepository.All.Where(x => x.ToAccountId == accountId);
+            transfers = transfers.Concat(transfersIn
+                .Select(x => new StatementDto { Amount = x.Amount, Month = x.Date.Month, Year = x.Date.Year, Date = x.Date })).ToList();
+            
+            return transfers;
+        }
 
-    public class StatementOverviewViewModel
-    {
-        public int AccountId { get; set; }
-        public double Amount { get; set; }
-        public string StatementDate { get; set; }
-        public DateTime Date { get; set; }
+        private List<StatementDto> GetTransactions(int accountId)
+        {
+            var transactionsQueryable = transactionRepository.All.Where(x => x.AccountId == accountId);
+            List<StatementDto> transactions = transactionsQueryable
+                .Select(x => new StatementDto{Amount = x.Amount, Month = x.Date.Month, Year = x.Date.Year, Date = x.Date}).ToList();
+            return transactions;
+        }
+
+        private class StatementDto
+        {
+            public double Amount { get; set; }
+            public int Month { get; set; }
+            public int Year { get; set; }
+            public DateTime Date { get; set; }
+        }
     }
 }

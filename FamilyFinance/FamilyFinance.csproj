@@ -188,6 +188,8 @@
     <Compile Include="Models\ViewModel\AccountActivityOverViewVeiwModel.cs" />
     <Compile Include="Models\ViewModel\AccountActivitiesViewModel.cs" />
     <Compile Include="Controllers\StatementsController.cs" />
+    <Compile Include="Models\ViewModel\StatementOverviewViewModel.cs" />
+    <Compile Include="Models\ViewModel\StatementsViewModel.cs" />
     <Compile Include="Models\ViewModel\StatementViewModel.cs" />
     <Compile Include="Models\Repository\AccountTypeRepository.cs" />
     <Compile Include="Controllers\AccountController.cs" />
