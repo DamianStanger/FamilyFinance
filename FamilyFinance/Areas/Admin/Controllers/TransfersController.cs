@@ -1,5 +1,4 @@
 using System.Web.Mvc;
-using FamilyFinance.Models;
 using FamilyFinance.Models.Domain;
 using FamilyFinance.Models.Repository;
 
@@ -7,17 +6,21 @@ namespace FamilyFinance.Areas.Admin.Controllers
 {   
     public class TransfersController : Controller
     {
+		private readonly IPersonRepository personRepository;
 		private readonly IAccountRepository accountRepository;
+		private readonly ICategoryRepository categoryRepository;
 		private readonly ITransferRepository transferRepository;
 
 		// If you are using Dependency Injection, you can delete the following constructor
-        public TransfersController() : this(new AccountRepository(), new TransferRepository())
+        public TransfersController() : this(new PersonRepository(), new AccountRepository(), new CategoryRepository(), new TransferRepository())
         {
         }
 
-        public TransfersController(IAccountRepository accountRepository, ITransferRepository transferRepository)
+        public TransfersController(IPersonRepository personRepository, IAccountRepository accountRepository, ICategoryRepository categoryRepository, ITransferRepository transferRepository)
         {
+			this.personRepository = personRepository;
 			this.accountRepository = accountRepository;
+			this.categoryRepository = categoryRepository;
 			this.transferRepository = transferRepository;
         }
 
@@ -26,7 +29,7 @@ namespace FamilyFinance.Areas.Admin.Controllers
 
         public ViewResult Index()
         {
-            return View(transferRepository.AllIncluding(transfer => transfer.FromAccount, transfer => transfer.ToAccount));
+            return View(transferRepository.AllIncluding(transfer => transfer.Initiator, transfer => transfer.Account, transfer => transfer.ToAccount, transfer => transfer.Category));
         }
 
         //
@@ -42,8 +45,10 @@ namespace FamilyFinance.Areas.Admin.Controllers
 
         public ActionResult Create()
         {
-			ViewBag.PossibleFromAccounts = accountRepository.All;
+			ViewBag.PossibleInitiators = personRepository.All;
+			ViewBag.PossibleAccounts = accountRepository.All;
 			ViewBag.PossibleToAccounts = accountRepository.All;
+			ViewBag.PossibleCategories = categoryRepository.All;
             return View();
         } 
 
@@ -58,8 +63,10 @@ namespace FamilyFinance.Areas.Admin.Controllers
                 transferRepository.Save();
                 return RedirectToAction("Index");
             } else {
-				ViewBag.PossibleFromAccounts = accountRepository.All;
+				ViewBag.PossibleInitiators = personRepository.All;
+				ViewBag.PossibleAccounts = accountRepository.All;
 				ViewBag.PossibleToAccounts = accountRepository.All;
+				ViewBag.PossibleCategories = categoryRepository.All;
 				return View();
 			}
         }
@@ -69,8 +76,10 @@ namespace FamilyFinance.Areas.Admin.Controllers
  
         public ActionResult Edit(int id)
         {
-			ViewBag.PossibleFromAccounts = accountRepository.All;
+			ViewBag.PossibleInitiators = personRepository.All;
+			ViewBag.PossibleAccounts = accountRepository.All;
 			ViewBag.PossibleToAccounts = accountRepository.All;
+			ViewBag.PossibleCategories = categoryRepository.All;
              return View(transferRepository.Find(id));
         }
 
@@ -85,8 +94,10 @@ namespace FamilyFinance.Areas.Admin.Controllers
                 transferRepository.Save();
                 return RedirectToAction("Index");
             } else {
-				ViewBag.PossibleFromAccounts = accountRepository.All;
+				ViewBag.PossibleInitiators = personRepository.All;
+				ViewBag.PossibleAccounts = accountRepository.All;
 				ViewBag.PossibleToAccounts = accountRepository.All;
+				ViewBag.PossibleCategories = categoryRepository.All;
 				return View();
 			}
         }
@@ -114,7 +125,9 @@ namespace FamilyFinance.Areas.Admin.Controllers
         protected override void Dispose(bool disposing)
         {
             if (disposing) {
+                personRepository.Dispose();
                 accountRepository.Dispose();
+                categoryRepository.Dispose();
                 transferRepository.Dispose();
             }
             base.Dispose(disposing);

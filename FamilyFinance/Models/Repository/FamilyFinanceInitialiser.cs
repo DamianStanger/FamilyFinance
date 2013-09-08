@@ -4,7 +4,7 @@ using FamilyFinance.Models.Domain;
 
 namespace FamilyFinance.Models.Repository
 {
-    public class FamilyFinanceInitialiser : DropCreateDatabaseAlways<FamilyFinanceContext>
+    public class FamilyFinanceInitialiser : DropCreateDatabaseIfModelChanges<FamilyFinanceContext>
     {
         private Account DamoBarclaysCurrent;
         private Account JointBarcalys;

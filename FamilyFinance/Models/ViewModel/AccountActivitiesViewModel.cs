@@ -12,16 +12,17 @@ namespace FamilyFinance.Models.ViewModel
         public string Description { get; set; }
         public string Name { get; set; }
         public double RunningTotal { get; set; }
+        public bool IsTransfer { get; set; }
 
-        public AccountActivitiesViewModel(Transaction transaction, double runningTotal)
+        public AccountActivitiesViewModel(IAccountActivity accountActivity)
         {
-            Date = transaction.Date;
-            Category = transaction.Category.Name;
-            Account = transaction.Account.Name;
-            Amount = transaction.Amount;
-            Description = transaction.Description;
-            Name = transaction.Account.Name;
-            RunningTotal = runningTotal;
+            Date = accountActivity.Date;
+            Category = accountActivity.Category.Name;
+            Account = accountActivity.Account.Name;
+            Amount = accountActivity.Amount;
+            Description = accountActivity.Description;
+            Name = accountActivity.Account.Name;
+            IsTransfer = accountActivity is Transfer;
         }
     }
 }

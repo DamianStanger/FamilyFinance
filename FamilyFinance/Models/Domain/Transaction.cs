@@ -2,7 +2,7 @@
 
 namespace FamilyFinance.Models.Domain
 {
-    public class Transaction
+    public class Transaction : IAccountActivity
     {
         public int Id { get; set; }
         public double Amount { get; set; }

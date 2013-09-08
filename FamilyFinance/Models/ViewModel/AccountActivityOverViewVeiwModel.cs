@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace FamilyFinance.Models.ViewModel
 {
@@ -9,9 +10,9 @@ namespace FamilyFinance.Models.ViewModel
         public double MoneyIn { get; set; }
         public double MoneyOut { get; set; }
 
-        public AccountActivityOverViewVeiwModel(List<AccountActivitiesViewModel> activities)
+        public AccountActivityOverViewVeiwModel(IEnumerable<AccountActivitiesViewModel> activities)
         {
-            Activities = activities;
+            Activities = activities.ToList();
         }
     }
 }

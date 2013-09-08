@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";        
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Index</h2>
@@ -20,10 +20,22 @@
             Amount
         </th>
         <th>
-            FromAccount
+            Description
+        </th>
+        <th>
+            Date
+        </th>
+        <th>
+            Initiator
+        </th>
+        <th>
+            Account
         </th>
         <th>
             ToAccount
+        </th>
+        <th>
+            Category
         </th>
     </tr>
 
@@ -41,10 +53,22 @@
 			@String.Format("{0:F}", item.Amount)
         </td>
         <td>
-			@(item.FromAccount == null ? "None" : item.FromAccount.Name)
+			@item.Description
+        </td>
+        <td>
+			@String.Format("{0:g}", item.Date)
+        </td>
+        <td>
+			@(item.Initiator == null ? "None" : item.Initiator.Name)
+        </td>
+        <td>
+			@(item.Account == null ? "None" : item.Account.Name)
         </td>
         <td>
 			@(item.ToAccount == null ? "None" : item.ToAccount.Name)
+        </td>
+        <td>
+			@(item.Category == null ? "None" : item.Category.Name)
         </td>
     </tr>
 }
