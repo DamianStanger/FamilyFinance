@@ -5,6 +5,7 @@ namespace FamilyFinance.Models.ViewModel
 {
     public class AccountActivitiesViewModel
     {
+        public int Id { get; set; }
         public DateTime Date { get; set; }
         public string Category { get; set; }
         public string Account { get; set; }
@@ -16,6 +17,7 @@ namespace FamilyFinance.Models.ViewModel
 
         public AccountActivitiesViewModel(IAccountActivity accountActivity)
         {
+            Id = accountActivity.Id;
             Date = accountActivity.Date;
             Category = accountActivity.Category.Name;
             Account = accountActivity.Account.Name;

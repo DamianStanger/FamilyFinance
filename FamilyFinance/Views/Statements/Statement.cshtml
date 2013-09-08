@@ -13,7 +13,7 @@
     Money In £@Model.MoneyIn - Money Out £@Model.MoneyOut = £@(Model.MoneyIn-Model.MoneyOut)
 </div>
 
-@foreach (var transaction in Model.Activities)
+@foreach (var a in Model.Activities)
 {
-    <p>@transaction.Date.ToShortDateString() @transaction.Name @transaction.Category.Name @transaction.Amount</p>
+    <p>@a.Date.ToShortDateString() @a.Name @a.Category @a.Amount @if (a.IsTransfer){<span>Transfer</span>}</p>
 }

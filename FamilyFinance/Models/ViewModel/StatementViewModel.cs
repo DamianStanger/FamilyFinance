@@ -7,7 +7,7 @@ namespace FamilyFinance.Models.ViewModel
     {
         public int AccountId { get; set; }
         public string AccountName { get; set; }
-        public List<IAccountActivity> Activities { get; set; }
+        public List<AccountActivitiesViewModel> Activities { get; set; }
         public string StatementDate { get; set; }
         public int PreviousYear { get; set; }
         public int PreviousMonth { get; set; }

@@ -47,7 +47,7 @@ namespace FamilyFinance.Controllers
             activities.AddRange(transactions);
             activities.AddRange(transfersOut);
             activities.AddRange(transfersIn);
-            activities = activities.OrderByDescending(x => x.Date).ToList();
+            var accountActivitiesVM = activities.OrderByDescending(x => x.Date).Select(x => new AccountActivitiesViewModel(x)).ToList();
 
             var viewModel = new StatementViewModel
                 {
@@ -58,7 +58,7 @@ namespace FamilyFinance.Controllers
                     PreviousYear = month == 1 ? year-1 : year,
                     NextMonth = month == 12 ? 1 : month+1,
                     NextYear = month == 12 ? year+1: year,
-                    Activities = activities,
+                    Activities = accountActivitiesVM,
                     MoneyIn = activities.Sum(x => x.Amount > 0 ? x.Amount : 0),
                     MoneyOut = activities.Sum(x => x.Amount < 0 ? x.Amount : 0)
                 };
