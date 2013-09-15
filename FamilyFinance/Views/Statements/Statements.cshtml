@@ -13,5 +13,5 @@
 
 @foreach (var statement in Model.Statements)
 {
-    <p>@Html.ActionLink(statement.StatementDate, "Statement", "Statements", new {accountId=statement.AccountId, Year=statement.Date.Year, Month=statement.Date.Month}, null) - £@statement.Amount</p>
+    <p>@Html.ActionLink(statement.StatementDate, "Statement", "Statements", new {accountId=statement.AccountId, Year=statement.Date.Year, Month=statement.Date.Month}, null) - IN (£@statement.In) OUT (£@statement.Out) - TOTAL £@statement.Amount</p>
 }

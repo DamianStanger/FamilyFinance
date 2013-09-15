@@ -83,13 +83,17 @@ namespace FamilyFinance.Controllers
 
             foreach (var statementCollection in allStatements)
             {
-                var sum = statementCollection.Sum(x => x.Amount);
+                var @in = statementCollection.Where(x => x.Amount > 0).Sum(x=>x.Amount) ;
+                var @out = statementCollection.Where(x => x.Amount < 0).Sum(x=>x.Amount) ;
+                var sum = @in + @out;
                 var year = statementCollection.First().Year;
                 var month = statementCollection.First().Month;
                 var date = statementCollection.First().Date;
 
                 var statementOverviewViewModel = new StatementOverviewViewModel() 
                 {
+                    In = @in,
+                    Out = @out,
                     Amount = sum, 
                     StatementDate = GetMonthYearDate(year, month),
                     Date = date,

@@ -7,10 +7,11 @@
 
 <h2>Account Statement for @Model.AccountName - @Model.StatementDate</h2>
 <span>@Html.ActionLink("Previous", "Statement", "Statements", new {accountId=Model.AccountId, Year=Model.PreviousYear, Month=Model.PreviousMonth}, null)</span>
+<span>@Html.ActionLink("All", "statements", new {accountId=Model.AccountId})</span>
 <span>@Html.ActionLink("Next", "Statement", "Statements", new {accountId=Model.AccountId, Year=Model.NextYear, Month=Model.NextMonth}, null)</span>
 
 <div>
-    Money In £@Model.MoneyIn - Money Out £@Model.MoneyOut = £@(Model.MoneyIn-Model.MoneyOut)
+    Money In £@Model.MoneyIn - Money Out £@Model.MoneyOut = £@(Model.MoneyIn + Model.MoneyOut)
 </div>
 
 @foreach (var a in Model.Activities)
