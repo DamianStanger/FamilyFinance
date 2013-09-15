@@ -1,0 +1,20 @@
+﻿@model FamilyFinance.Models.ViewModel.AccountActivityOverViewVeiwModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>All transactions accross all accounts for @Model.StatementDate</h2>
+<span>@Html.ActionLink("Previous", "MonthlyActivity", new {Year=Model.PreviousYear, Month=Model.PreviousMonth}, null)</span>
+<span>@Html.ActionLink("All", "index")</span>
+<span>@Html.ActionLink("Next", "MonthlyActivity", new {Year=Model.NextYear, Month=Model.NextMonth}, null)</span>
+
+<div>
+    Money In £@Model.MoneyIn - Money Out £@Model.MoneyOut = £@(Model.MoneyIn+Model.MoneyOut)
+</div>
+
+@foreach (var t in Model.Activities)
+{
+    <div><span>@t.Date.ToShortDateString()</span> <span>@t.Account</span> <span>@t.Category</span> <span>@t.Amount</span> <span>@t.RunningTotal</span>@if (t.IsTransfer){<span>(Transfer)</span>}</div>
+}

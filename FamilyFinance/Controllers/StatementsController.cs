@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using FamilyFinance.Models.Domain;
 using FamilyFinance.Models.Repository;
 using FamilyFinance.Models.ViewModel;
+using FamilyFinance.Models.service;
 
 namespace FamilyFinance.Controllers
 {
@@ -32,7 +33,7 @@ namespace FamilyFinance.Controllers
         public ActionResult Statement(int accountId, int year, int month)
         {
             var account = accountRepository.Find(accountId);
-            var date = GetMonthYearDate(year, month);
+            var date = DateService.GetMonthYearDate(year, month);
             
             var transactions = transactionRepository.All.Where(x => x.AccountId == accountId && x.Date.Year == year && x.Date.Month == month).ToList();
             var transfersOut = transferRepository.All.Where(x => x.AccountId == accountId && x.Date.Year == year && x.Date.Month == month).ToList();
@@ -54,20 +55,15 @@ namespace FamilyFinance.Controllers
                     AccountId = accountId,
                     AccountName = account.Name,
                     StatementDate = date,
-                    PreviousMonth = month == 1 ? 12 : month-1,
-                    PreviousYear = month == 1 ? year-1 : year,
-                    NextMonth = month == 12 ? 1 : month+1,
-                    NextYear = month == 12 ? year+1: year,
+                    PreviousMonth = DateService.PreviousMonth(year, month),
+                    PreviousYear = DateService.PreviousYear(year, month),
+                    NextMonth = DateService.NextMonth(year, month),
+                    NextYear = DateService.NextYear(year, month),
                     Activities = accountActivitiesVM,
                     MoneyIn = activities.Sum(x => x.Amount > 0 ? x.Amount : 0),
                     MoneyOut = activities.Sum(x => x.Amount < 0 ? x.Amount : 0)
                 };
             return View(viewModel);
-        }
-
-        private static string GetMonthYearDate(int year, int month)
-        {
-            return new DateTime(year, month, 1).ToLongDateString().Replace("01 ", "");
         }
 
         public ActionResult Statements(int accountId)
@@ -95,7 +91,7 @@ namespace FamilyFinance.Controllers
                     In = @in,
                     Out = @out,
                     Amount = sum, 
-                    StatementDate = GetMonthYearDate(year, month),
+                    StatementDate = DateService.GetMonthYearDate(year, month),
                     Date = date,
                     AccountId = accountId
                 };
